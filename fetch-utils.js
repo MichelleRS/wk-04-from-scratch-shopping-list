@@ -33,11 +33,7 @@ export async function createListItem(item, quantity) {
     const response = await client.from('shopping_list').insert({ item, quantity });
 
     // error handling
-    if (response.error) {
-        console.error(response.error.message);
-    } else {
-        return response.data;
-    }
+    return errorHandling(response);
 }
 
 // create function to get list items
@@ -48,11 +44,7 @@ export async function getListItems() {
         .match({ user_id: getUser().id });
 
     // error handling
-    if (response.error) {
-        console.error(response.error.message);
-    } else {
-        return response.data;
-    }
+    return errorHandling(response);
 }
 
 // create function to edit list items
@@ -63,11 +55,7 @@ export async function editListItem(item) {
         .match({ id: item.id });
 
     // error handling
-    if (response.error) {
-        console.error(response.error.message);
-    } else {
-        return response.data;
-    }
+    return errorHandling(response);
 }
 
 // create function to delete list
@@ -75,6 +63,11 @@ export async function deleteList() {
     const response = await client.from('shopping_list').delete().match({ user_id: getUser().id });
 
     // error handling
+    return errorHandling(response);
+}
+
+// create function for error handling
+function errorHandling(response) {
     if (response.error) {
         console.error(response.error.message);
     } else {
