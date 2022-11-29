@@ -37,6 +37,7 @@ form.addEventListener('submit', async (e) => {
         // display item
         // display whole list (clear old list and fetch it again)
         fetchAndDisplayList();
+        error.textContent = '';
     } else {
         // error handling
         error.textContent =
