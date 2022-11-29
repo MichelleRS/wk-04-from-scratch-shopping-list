@@ -1,5 +1,6 @@
-const SUPABASE_URL = '';
-const SUPABASE_KEY = '';
+const SUPABASE_URL = 'https://qibydbafeplthyrhkgog.supabase.co';
+const SUPABASE_KEY =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpYnlkYmFmZXBsdGh5cmhrZ29nIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjgxMDgwOTIsImV4cCI6MTk4MzY4NDA5Mn0.NrtQcuaIUkk_9z8xEvXMdOg-GqBQaeDdi3tGUQcDCQc';
 const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 /* Auth related functions */
@@ -27,3 +28,49 @@ export async function signOutUser() {
 }
 
 /* Data functions */
+// create function for form to take in item name and quantity and insert into Supabase table
+export async function createListItem(item, quantity) {
+    const response = await client.from('shopping_list').insert({ item, quantity });
+
+    // error handling
+    return errorHandling(response);
+}
+
+// create function to get list items
+export async function getListItems() {
+    const response = await client
+        .from('shopping_list')
+        .select('*')
+        .match({ user_id: getUser().id });
+
+    // error handling
+    return errorHandling(response);
+}
+
+// create function to edit list items
+export async function editListItem(item) {
+    const response = await client
+        .from('shopping_list')
+        .update({ purchased: !item.purchased })
+        .match({ id: item.id });
+
+    // error handling
+    return errorHandling(response);
+}
+
+// create function to delete list
+export async function deleteList() {
+    const response = await client.from('shopping_list').delete().match({ user_id: getUser().id });
+
+    // error handling
+    return errorHandling(response);
+}
+
+// create function for error handling
+function errorHandling(response) {
+    if (response.error) {
+        console.error(response.error.message);
+    } else {
+        return response.data;
+    }
+}
