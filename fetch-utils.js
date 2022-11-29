@@ -69,3 +69,15 @@ export async function editListItem(item) {
         return response.data;
     }
 }
+
+// create function to delete list
+export async function deleteList() {
+    const response = await client.from('shopping_list').delete().match({ user_id: getUser().id });
+
+    // error handling
+    if (response.error) {
+        console.error(response.error.message);
+    } else {
+        return response.data;
+    }
+}
