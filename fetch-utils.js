@@ -28,3 +28,14 @@ export async function signOutUser() {
 }
 
 /* Data functions */
+// create function for form to take in item name and quantity and insert into Supabase table
+export async function createListItem(item, quantity) {
+    const response = await client.from('shopping_list').insert({ item, quantity });
+
+    // error handling
+    if (response.error) {
+        console.error(response.error.message);
+    } else {
+        return response.data;
+    }
+}
