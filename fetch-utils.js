@@ -42,7 +42,10 @@ export async function createListItem(item, quantity) {
 
 // create function to get list items
 export async function getListItems() {
-    const response = await client.from('favorite').select('*').match({ user_id: getUser().id });
+    const response = await client
+        .from('shopping_list')
+        .select('*')
+        .match({ user_id: getUser().id });
 
     // error handling
     if (response.error) {
