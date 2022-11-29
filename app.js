@@ -1,17 +1,22 @@
 /* Imports */
 // this will check if we have a user and set signout link if it exists
 import './auth/user.js';
-import { createListItem, getListItems, editListItem } from './fetch-utils.js';
+import { createListItem, getListItems, editListItem, deleteList } from './fetch-utils.js';
 import { renderListItem } from './render-utils.js';
 
 /* Get DOM Elements */
 const form = document.querySelector('#shopping-list-form');
 const error = document.querySelector('#error');
 const listEl = document.querySelector('#shopping-list');
+const deleteListButton = document.querySelector('#delete-list-button');
 
 /* State */
 
 /* Events */
+window.addEventListener('load', async () => {
+    await fetchAndDisplayList();
+});
+
 // listen for submit of form
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -39,11 +44,14 @@ form.addEventListener('submit', async (e) => {
     }
 });
 
-/* Display Functions */
-window.addEventListener('load', async () => {
+// create event listener for delete button
+deleteListButton.addEventListener('click', async () => {
+    console.log('i clicked!!');
+    await deleteList();
     await fetchAndDisplayList();
 });
 
+/* Display Functions */
 async function fetchAndDisplayList() {
     // start with a clear list
     listEl.textContent = '';
