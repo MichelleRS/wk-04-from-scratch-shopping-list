@@ -54,3 +54,17 @@ export async function getListItems() {
         return response.data;
     }
 }
+
+export async function editListItem(item) {
+    const response = await client
+        .from('shopping_list')
+        .update({ purchased: !item.purchased })
+        .match({ id: item.id });
+
+    // error handling
+    if (response.error) {
+        console.error(response.error.message);
+    } else {
+        return response.data;
+    }
+}
