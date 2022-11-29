@@ -40,6 +40,9 @@ form.addEventListener('submit', async (e) => {
 });
 
 /* Display Functions */
+window.addEventListener('load', async () => {
+    await fetchAndDisplayList();
+});
 
 async function fetchAndDisplayList() {
     // start with a clear list
