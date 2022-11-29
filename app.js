@@ -46,7 +46,6 @@ form.addEventListener('submit', async (e) => {
 
 // create event listener for delete button
 deleteListButton.addEventListener('click', async () => {
-    console.log('i clicked!!');
     await deleteList();
     await fetchAndDisplayList();
 });
