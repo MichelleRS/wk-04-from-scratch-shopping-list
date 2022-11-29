@@ -39,3 +39,15 @@ export async function createListItem(item, quantity) {
         return response.data;
     }
 }
+
+// create function to get list items
+export async function getListItems() {
+    const response = await client.from('favorite').select('*').match({ user_id: getUser().id });
+
+    // error handling
+    if (response.error) {
+        console.error(response.error.message);
+    } else {
+        return response.data;
+    }
+}
