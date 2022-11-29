@@ -1,7 +1,7 @@
 /* Imports */
 // this will check if we have a user and set signout link if it exists
 import './auth/user.js';
-import { createListItem, getListItems } from './fetch-utils.js';
+import { createListItem, getListItems, editListItem } from './fetch-utils.js';
 import { renderListItem } from './render-utils.js';
 
 /* Get DOM Elements */
@@ -53,6 +53,19 @@ async function fetchAndDisplayList() {
         for (let item of list) {
             // initialize a variable to get the rendered inputs from renderListItem()
             const listItemEl = renderListItem(item);
+
+            // add event listener so user can click each item
+            listItemEl.addEventListener('click', async () => {
+                // await editListItem
+                await editListItem(item);
+                // await fetchAndDisplayList
+                await fetchAndDisplayList();
+            });
+            // add a class list to style purchased items
+            if (item.purchased) {
+                listItemEl.classList.add('purchased-true');
+            }
+
             // take the rendered inputs and append to listEl DOM element
             listEl.append(listItemEl);
         }

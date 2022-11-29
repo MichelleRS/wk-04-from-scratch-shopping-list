@@ -55,6 +55,7 @@ export async function getListItems() {
     }
 }
 
+// create function to edit list items
 export async function editListItem(item) {
     const response = await client
         .from('shopping_list')
